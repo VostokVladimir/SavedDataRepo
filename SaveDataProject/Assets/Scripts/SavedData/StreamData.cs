@@ -2,42 +2,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System;
 
 
 namespace OOP
 {
-    public sealed class StreamData : IData<SavedData>
+    public sealed class StreamData : IData<PlayerInfo>
     {
-         public void Save(SavedData data, string path=null)
+         public void Save(PlayerInfo data, string path=null)
          {
             if(path==null)
             { return; }
 
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(path)) 
             {
-                sw.WriteLine(data.Name);
-                sw.WriteLine(data.Position.x);
-                sw.WriteLine(data.Position.y);
-                sw.WriteLine(data.Position.z);
-                sw.WriteLine(data.IsEnabled);
-            
-            
+                sw.WriteLine(data._NamePlayer);
+                sw.WriteLine(data.playerPosition.x);
+                sw.WriteLine(data.playerPosition.y);
+                sw.WriteLine(data.playerPosition.z);
+                sw.WriteLine(data._Helth);
+                sw.WriteLine(data._Playerscore);
+
             }
+            
 
          }
 
-        public SavedData Load(string path = null)
+        public PlayerInfo Load(string path = null)
         {
-            var resultForload = new SavedData();
+            var resultForload = new PlayerInfo("",0,0);
 
-            using (var sr=new StreamReader(path))
+            //if(path==null)
+            //{ throw new NullReferenceException(); }
+
+            //if(!File.Exists(path))
+            //{ throw new FileNotFoundException("Файла загрузки нет в папке"); }
+
+
+            using (var sr = new StreamReader(path))
             {
-                
-                resultForload.Name = sr.ReadLine();
-                //resultForload.Position.x = sr.ReadLine().TrySingle();
-                //resultForload.Position.y = sr.ReadLine().TrySingle();
-                //resultForload.Position.z = sr.ReadLine().TrySingle();
-                //resultForload.IsEnabled = sr.ReadLine().TryBool();
+                // while (!sr.EndOfStream)
+
+
+                resultForload._NamePlayer = sr.ReadLine();
+                resultForload.playerPosition.x = sr.ReadLine().TrySingle();
+                resultForload.playerPosition.y = sr.ReadLine().TrySingle();
+                resultForload.playerPosition.z = sr.ReadLine().TrySingle();
+                resultForload._Helth = sr.ReadLine().TryInt();
+                resultForload._Playerscore = sr.ReadLine().TryInt();
 
 
             }
