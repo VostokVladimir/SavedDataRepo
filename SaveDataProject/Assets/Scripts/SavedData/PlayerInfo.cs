@@ -11,7 +11,7 @@ public class PlayerInfo
     //fields
     private float _helth;
     private string _namePlayer;
-    private int _playerscore;
+    private float _playerscore;
     public Vector3 playerPosition;
 
     //property
@@ -29,7 +29,7 @@ public class PlayerInfo
 
     }
 
-    public int _Playerscore
+    public float _Playerscore
     {
         get { return _playerscore; }
         set { _playerscore = value; }
@@ -43,7 +43,7 @@ public class PlayerInfo
 
 
     //konstructor
-    public PlayerInfo(string _namePlayer,float _helth,int _playerscore)
+    public PlayerInfo(string _namePlayer,float _helth,float _playerscore)
     {
         this._helth = _helth;
         this._namePlayer = _namePlayer;

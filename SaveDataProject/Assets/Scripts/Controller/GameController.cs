@@ -6,16 +6,24 @@ namespace OOP
 {
     public class GameController : MonoBehaviour
     {
-        private IData<SavedData> _dataforSave;
+        //private IData<SavedData> _dataforSave;
         private References references;
         private GameObject playerGO;
-        private PlayerInfo playerInfo;
+        public PlayerInfo playerInfo;
+        public float score;
+        
          
 
         private void Awake()
 
 
         {
+            PlayerInfo playerInfo = new PlayerInfo("Вася",20,0);
+            Debug.Log($"{playerInfo._NamePlayer}");
+            playerInfo.playerPosition = transform.position;
+            score = playerInfo._Playerscore;
+
+            #region "Работа с ссылками"
             //вар 1
             // GameObject playerGO = null; //GO обнуляем что бы скачать префаб с папки ресурсес
             // references = new References();//создаем экз класса для хранения ссылок на папку//
@@ -28,43 +36,43 @@ namespace OOP
             //var player = new Player("Федор",20,0);
 
             //playerInfo = new PlayerInfo("Lena", 34, 0);
-           // var name1 = playerInfo._NamePlayer;
-            
+            // var name1 = playerInfo._NamePlayer;
+            #endregion
+
+                      
             
         }
 
-
-        // Start is called before the first frame update
-        void Start()
+        public void OnTriggerEnter(Collider other)
         {
+            if(other.gameObject.CompareTag("Bonus"))
 
-            
-            var saved = new PlayerInfo("Lena", 34, 0);
-            var streamData = new StreamData();
-            saved._NamePlayer = "Player";
-            Debug.Log($"Сейчас играет {saved._NamePlayer}");
+            {
+                
+             var _goodbonus= other.GetComponent<GoodBonus>();
+             var bonus= _goodbonus.Point;
+             ApplyGoodBonus(bonus);
+               
+            }
+        }
 
-            saved.playerPosition.x = transform.position.x;
-            saved.playerPosition.y = transform.position.y;
-            saved.playerPosition.z = transform.position.z;
-            saved._Helth = 20;
-            saved._Playerscore = 0;
-            Debug.Log($"Сейчас играет {saved._Playerscore}");
-            streamData.Save(saved, "C:/Users/HP VICTUS/Desktop/GeekBrains/Курс 4 Основы С# в Unity/Урок 8 Сохранение данных/savedData3.txt");
-
+               
+        public void ApplyGoodBonus(float _bonus)
+        {
+            score = score + _bonus;
+            playerInfo._Playerscore = score;
+            Debug.Log($"было {score} получено {_bonus} балов  стало {score}");
         }
 
 
-        public void GetCurrentPlayerInfo()
+
+        public void SaveGameMethod(PlayerInfo playerInfo)
         {
-            playerInfo._Helth=56;
-            playerInfo.playerPosition = transform.position;
 
-        }
+            SaveGame game = new SaveGame();
+            game.SaveGameonButton(playerInfo);
 
 
-        private void Update()
-        {
             
 
         }

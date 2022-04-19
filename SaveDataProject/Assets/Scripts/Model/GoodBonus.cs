@@ -2,46 +2,67 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class GoodBonus : MonoBehaviour, IFlay
+namespace OOP
 {
-    public int Point;
-    private float _lenthflay;
-   // public References references; //не спаунится ссылка блин
-    //public GameObject _goodBonus;
-   // public Vector3 _goodspawn1;
-
-
-    void Awake()
+    public class GoodBonus : MonoBehaviour, IFlay
     {
+        public int Point;
+        private float _lenthflay;
+        private float _bonusPoint;//колличество балов при сборе;
+        public delegate void GoodBonusDelegate(float a);
+        public event GoodBonusDelegate Contact;
+       
 
-       _lenthflay = Random.Range(2f,2.2f);
+        // public References references; //не спаунится ссылка блин
+        //public GameObject _goodBonus;
+        // public Vector3 _goodspawn1;
+
+
+        void Awake()
+        {
+
+            _lenthflay = Random.Range(2f, 2.2f);
+            _bonusPoint = 5;
+
+
+        }
+
+        void Start()
+        {
+
+            //Instantiate(references.GoodBonus, new Vector3(1, 1, 1), Quaternion.identity);
+            //Instantiate(_goodBonus, _goodspawn1, Quaternion.identity);
+            //
+        }
+
+        public void Update()
+        {
+
+            transform.Rotate(0.0f, 0.0f, 0.5f);
+            Flay();
+        }
+
+        public void Flay()
+        {
+
+            transform.localPosition = new Vector3(transform.localPosition.x, Mathf.PingPong(Time.time, _lenthflay));
+
+        }
+
+        public void OnTriggerEnter(Collider other)//процесс
+        {
+            if (other.gameObject.CompareTag("Player"))
+                        
+            {   
+                Destroy(gameObject);
+            }
+        }
+
+       
+
         
-               
-    }
-
-    void Start()
-    {
-        
-        
-        //Instantiate(references.GoodBonus, new Vector3(1, 1, 1), Quaternion.identity);
-        //Instantiate(_goodBonus, _goodspawn1, Quaternion.identity);
-      //
-    }
-
-    void Update()
-    {
-        
-        transform.Rotate(0.0f, 0.0f, 0.5f);
-        Flay();
-    }
-
-    public void Flay()
-    {
-         
-        transform.localPosition = new Vector3(transform.localPosition.x, Mathf.PingPong(Time.time, _lenthflay));
-        
-    }
 
 
+
+}
 }
