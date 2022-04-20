@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace OOP
 {
@@ -8,20 +9,21 @@ namespace OOP
     {
         //private IData<SavedData> _dataforSave;
         private References references;
-        private GameObject playerGO;
         public PlayerInfo playerInfo;
         public float score;
+        public SaveGame game;
+        public PlayerInfo currentplayerInfo;
         
          
 
-        private void Awake()
+        public void Awake()
 
 
         {
-            PlayerInfo playerInfo = new PlayerInfo("Вася",20,0);
-            Debug.Log($"{playerInfo._NamePlayer}");
-            playerInfo.playerPosition = transform.position;
-            score = playerInfo._Playerscore;
+            playerInfo = new PlayerInfo("Вася",20,0);
+            playerInfo.playerPosition = transform.position;//задаем стартовую позицию игрока
+            Debug.Log($"позиция на старте X {playerInfo.playerPosition.x} Y {playerInfo.playerPosition.x} Z {playerInfo.playerPosition.z}");//проблема 1 почему выводит в дебаг  два варианта значения позиции объекта ? ( см принт скрин)
+            score = playerInfo._Playerscore;//задаем счет игрока  на старте игры
 
             #region "Работа с ссылками"
             //вар 1
@@ -50,31 +52,40 @@ namespace OOP
             {
                 
              var _goodbonus= other.GetComponent<GoodBonus>();
-             var bonus= _goodbonus.Point;
-             ApplyGoodBonus(bonus);
-               
+             var bonus= _goodbonus.Point;//получаем размер очков от сбора Бонуса
+             playerInfo._Playerscore += bonus;
+             Debug.Log($" стало {playerInfo._Playerscore}");
             }
         }
 
-               
-        public void ApplyGoodBonus(float _bonus)
+       
+
+        void Update()
         {
-            score = score + _bonus;
-            playerInfo._Playerscore = score;
-            Debug.Log($"было {score} получено {_bonus} балов  стало {score}");
+            if (playerInfo != null)//передаем текущие данные Игрока
+            {
+               // currentplayerInfo = playerInfo;
+                currentplayerInfo._NamePlayer = playerInfo._NamePlayer;
+               currentplayerInfo._Playerscore = playerInfo._Playerscore;
+                currentplayerInfo.playerPosition = playerInfo.playerPosition;
+            }
+
+            Debug.Log($"из апдейта счет  {currentplayerInfo._Playerscore}");// Проблема 2 почему в дебаге два значения 0 и обновленное ?
         }
 
 
-
-        public void SaveGameMethod(PlayerInfo playerInfo)
+        public void Save()//на данном методе кнопка Save на канвасе. 
         {
+            if (game == null)
+            { game = new SaveGame(playerInfo); }
+            else 
+            { 
+              game.SaveGameonButton(playerInfo);
+              
+             
+            }
 
-            SaveGame game = new SaveGame();
-            game.SaveGameonButton(playerInfo);
-
-
-            
-
+             Debug.Log($"счет игрока составляет { playerInfo}");//проблема3  почему при нажатии кнопки в дебаге выводит значение 0 при увеличении количества бонусов, и не делает обновление значения ?
         }
 
     }
