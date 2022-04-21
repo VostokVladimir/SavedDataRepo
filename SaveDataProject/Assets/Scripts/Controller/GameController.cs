@@ -25,7 +25,11 @@ namespace OOP
         {
             playerInfo = new PlayerInfo();
             playerInfo._NamePlayer = "Коля";
-            playerInfo.PositionPlayer = transform.position;//задаем стартовую позицию игрока
+            playerInfo.PositionPlayer = transform.position;
+            playerInfo.PositionPlayer.X = transform.position.x;
+            playerInfo.PositionPlayer.Y = transform.position.y;
+            playerInfo.PositionPlayer.Z = transform.position.z;
+            //задаем стартовую позицию игрока
             Debug.Log($"позиция на старте X {playerInfo.PositionPlayer.X} Y {playerInfo.PositionPlayer.Y} Z {playerInfo.PositionPlayer.Z}");//проблема 1 почему выводит в дебаг  два варианта значения позиции объекта ? ( см принт скрин)
             
 
@@ -72,7 +76,7 @@ namespace OOP
         }
 
 
-        public void GetDataPlayer()//на данном методе кнопка Save на канвасе. Не могу сюда передать обновленные данные
+        public void GetDataPlayer()//на данном методе кнопка Save на канвасе. Не могу сюда передать обновленные данные по Обьекту игрока
         {
             var streamdata = new StreamData();
             var saved = new PlayerInfo();
