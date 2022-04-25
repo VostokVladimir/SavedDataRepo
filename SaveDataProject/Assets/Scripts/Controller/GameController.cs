@@ -12,7 +12,7 @@ namespace OOP
         public PlayerInfo playerInfo;
         public float score;
         //public SaveGame game;
-        
+       
         
          
 
@@ -76,22 +76,20 @@ namespace OOP
         }
 
 
-        public void GetDataPlayer()//на данном методе кнопка Save на канвасе. Не могу сюда передать обновленные данные по Обьекту игрока
+        public void ButtonDown()
+        {
+            GetDataPlayer(playerInfo);
+        }
+
+
+        public static void GetDataPlayer(PlayerInfo playerInfo)//на данном методе кнопка Save на канвасе. Не могу сюда передать обновленные данные по Обьекту игрока
         {
             var streamdata = new StreamData();
-            var saved = new PlayerInfo();
+            var saved = new PlayerInfo {_NamePlayer=playerInfo._NamePlayer,_Playerscore=playerInfo._Playerscore};
             saved._NamePlayer = playerInfo._NamePlayer;
             saved._Playerscore = playerInfo._Playerscore;
            
-            //удалить класс SaveGame
-            //var pl = playerInfo;
-            //if (game == null)
-            //{ game = new SaveGame(pl); }
-            //else 
-            //{ 
-            //  game.SaveGameonButton(pl);
-                           
-            //}
+            
 
              Debug.Log($"счет игрока составляет { saved._Playerscore}");//проблема3  почему при нажатии кнопки в дебаге выводит значение 0 при увеличении количества бонусов, и не делает обновление значения ?
              streamdata.Save(saved, "C:/Users/HP VICTUS/Desktop/GeekBrains/Курс 4 Основы С# в Unity/Урок 8 Сохранение данных/savedData3.txt");//Проблема 4 почему в текстовом файле не сохраняются обновленные данные в GameControllers?
