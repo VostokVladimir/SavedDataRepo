@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ShootPlayerController : MonoBehaviour
-{
+{   
+/// <summary>
+/// Класс контроля выстрелов
+/// </summary>
     [SerializeField] private Transform _targetPoint;
     private Camera _cameraPlayer;
     [SerializeField] private int _damageValue;//устанавливаем какой урон дает этот шутер
-                                         // Start is called before the first frame update
+    [SerializeField] private GameObject _bullet;
+    [SerializeField] private Transform _startShutposition;
+    public float force = 4;
 
 
 
@@ -35,5 +40,13 @@ public class ShootPlayerController : MonoBehaviour
                 obj_damagable.ApplyDamage(_damageValue);
             }
         }
+
+        //if(Input.GetButton("Fire1"))
+        //{
+        //    var shoot = Instantiate(_bullet, _startShutposition.position,_startShutposition.rotation);
+        //    var D=shoot.GetComponent<Rigidbody>();
+        //    D.AddForce(_startShutposition.up * force);
+        //}
+
     }
 }

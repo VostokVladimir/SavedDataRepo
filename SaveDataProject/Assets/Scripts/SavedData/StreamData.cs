@@ -17,9 +17,9 @@ namespace OOP
             using (var sw = new StreamWriter(path)) 
             {
                 sw.WriteLine(data._NamePlayer);
-                sw.WriteLine(data.playerPosition.x);
-                sw.WriteLine(data.playerPosition.y);
-                sw.WriteLine(data.playerPosition.z);
+                sw.WriteLine(data.PositionPlayer.X);
+                sw.WriteLine(data.PositionPlayer.Y);
+                sw.WriteLine(data.PositionPlayer.Z);
                 sw.WriteLine(data._Helth);
                 sw.WriteLine(data._Playerscore);
 
@@ -30,14 +30,7 @@ namespace OOP
 
         public PlayerInfo Load(string path = null)
         {
-            var resultForload = new PlayerInfo("",0,0);
-
-            //if(path==null)
-            //{ throw new NullReferenceException(); }
-
-            //if(!File.Exists(path))
-            //{ throw new FileNotFoundException("Файла загрузки нет в папке"); }
-
+            var resultForload = new PlayerInfo();
 
             using (var sr = new StreamReader(path))
             {
@@ -45,9 +38,9 @@ namespace OOP
 
 
                 resultForload._NamePlayer = sr.ReadLine();
-                resultForload.playerPosition.x = sr.ReadLine().TrySingle();
-                resultForload.playerPosition.y = sr.ReadLine().TrySingle();
-                resultForload.playerPosition.z = sr.ReadLine().TrySingle();
+                resultForload.PositionPlayer.X = sr.ReadLine().TrySingle();
+                resultForload.PositionPlayer.Y = sr.ReadLine().TrySingle();
+                resultForload.PositionPlayer.Z = sr.ReadLine().TrySingle();
                 resultForload._Helth = sr.ReadLine().TryInt();
                 resultForload._Playerscore = sr.ReadLine().TryInt();
 
