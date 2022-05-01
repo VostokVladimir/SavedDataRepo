@@ -16,17 +16,36 @@ namespace OOP
 
             using (var sw = new StreamWriter(path)) 
             {
-                sw.WriteLine(data._NamePlayer);
+                sw.WriteLine(data.NamePlayerQ);
                 sw.WriteLine(data.PositionPlayer.X);
                 sw.WriteLine(data.PositionPlayer.Y);
                 sw.WriteLine(data.PositionPlayer.Z);
-                sw.WriteLine(data._Helth);
-                sw.WriteLine(data._Playerscore);
+                sw.WriteLine(data.HelthQ);
+                sw.WriteLine(data.PlayerScoreQ);
 
             }
             
 
          }
+
+        public void SaveBonusData(BonusCurrentPositionInfo databonus, string path = null)
+        {
+            if (path == null)
+            { return; }
+
+            using (var sw = new StreamWriter(path))
+            {
+                
+                sw.WriteLine(databonus.positionBonus.x);
+                sw.WriteLine(databonus.positionBonus.y);
+                sw.WriteLine(databonus.positionBonus.z);
+                 
+
+            }
+
+
+        }
+
 
         public PlayerInfo Load(string path = null)
         {
@@ -37,12 +56,12 @@ namespace OOP
                 // while (!sr.EndOfStream)
 
 
-                resultForload._NamePlayer = sr.ReadLine();
+                resultForload.NamePlayerQ = sr.ReadLine();
                 resultForload.PositionPlayer.X = sr.ReadLine().TrySingle();
                 resultForload.PositionPlayer.Y = sr.ReadLine().TrySingle();
                 resultForload.PositionPlayer.Z = sr.ReadLine().TrySingle();
-                resultForload._Helth = sr.ReadLine().TryInt();
-                resultForload._Playerscore = sr.ReadLine().TryInt();
+                resultForload.HelthQ = sr.ReadLine().TryInt();
+                resultForload.PlayerScoreQ = sr.ReadLine().TryInt();
 
 
             }

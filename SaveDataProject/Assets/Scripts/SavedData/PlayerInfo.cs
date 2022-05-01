@@ -10,51 +10,35 @@ namespace OOP
     {
 
         //fields
-        private float _helth;
-        private string _namePlayer;
-        private float _playerscore;
+        public float HelthQ;
+        public string NamePlayerQ;
+        public float PlayerScoreQ;
         // public Vector3 playerPosition;
         public Vector3Serializable PositionPlayer;
 
         //property
-        public float _Helth
-        {
-            get { return _helth; }
-            set { _helth = value; }
+        
+               
 
-        }
-
-        public string _NamePlayer
-        {
-            get { return _namePlayer; }
-            set { _namePlayer = value; }
-
-        }
-
-        public float _Playerscore
-        {
-            get { return _playerscore; }
-            set { _playerscore = value; }
-
-        }
-
-        public override string ToString()
-        {
-            return $" Игрок имя {_NamePlayer} счет {_Playerscore} позиция {PositionPlayer} здоровье {_Helth} ";
-        }
-
-
-        ////konstructor
-        //public PlayerInfo(string _namePlayer, float _helth, float _playerscore,Vector3Serializable position)
+        //public float _Playerscore//свойства не получают данные полей класса и остаются дефолтными
         //{
-        //    this._helth = _helth;
-        //    this._namePlayer = _namePlayer;
-        //    this._playerscore = _playerscore;
-        //    this.PositionPlayer = position;
+        //    get { return _playerscore; }
+        //    set 
+        //    { 
+        //        _playerscore = value;
+        //       
+        //    }
+
 
         //}
 
+        public override string ToString()
+        {
+            return $" Игрок имя {NamePlayerQ} счет {PlayerScoreQ} позиция {PositionPlayer} здоровье {HelthQ} ";
+        }
 
+
+        
     }
 
     [Serializable]

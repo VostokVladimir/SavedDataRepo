@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace OOP
 {
@@ -10,22 +11,24 @@ namespace OOP
         public PlayerInfo playerInfo;
         public delegate PlayerInfo MyDelegate (PlayerInfo player);
         public event MyDelegate _greatePlayerevent;
+        public Text textScore;
+       
       
 
 
 
-        public void Awake()
-
-
+        public void Start()
         {
             playerInfo = new PlayerInfo();
-            playerInfo._NamePlayer = "Коля";
+
+            playerInfo.NamePlayerQ = "Коля";
             playerInfo.PositionPlayer = transform.position;
+            playerInfo.PlayerScoreQ = 1;
             playerInfo.PositionPlayer.X = transform.position.x;
             playerInfo.PositionPlayer.Y = transform.position.y;
             playerInfo.PositionPlayer.Z = transform.position.z;
             //задаем стартовую позицию игрока
-            Debug.Log($"позиция на старте X {playerInfo.PositionPlayer.X} Y {playerInfo.PositionPlayer.Y} Z {playerInfo.PositionPlayer.Z}");//проблема 1 почему выводит в дебаг  два варианта значения позиции объекта ? ( см принт скрин)
+            Debug.Log($"позиция на старте X {playerInfo.PositionPlayer.X} Y {playerInfo.PositionPlayer.Y} Z {playerInfo.PositionPlayer.Z}");
            
             
             if(playerInfo!=null)
@@ -49,9 +52,6 @@ namespace OOP
             //playerInfo = new PlayerInfo("Lena", 34, 0);
             // var name1 = playerInfo._NamePlayer;
             #endregion
-
-
-
         }
                
 
@@ -63,8 +63,9 @@ namespace OOP
 
                 var _goodbonus = other.GetComponent<GoodBonus>();
                 var bonus = _goodbonus.Point;//получаем размер очков от сбора Бонуса
-                playerInfo._Playerscore += bonus;
-                Debug.Log($" стало {playerInfo._Playerscore}");
+                playerInfo.PlayerScoreQ += bonus;
+                textScore.text = playerInfo.PlayerScoreQ.ToString();//выводим счет очков на канвас через инспектор пробрасывая ссылку
+                
             }
         }
 

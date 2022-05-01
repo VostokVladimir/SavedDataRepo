@@ -9,14 +9,20 @@ namespace OOP
     {
         public PlayerBonusCatchControl catchControl;
         public PlayerInfo playerInfo;
-        
-                 
+        public Vector3 currentposition;
+        public BonusCurrentPositionInfo [] bonusPositionsInfoBox;
+         
+
+
+
         public void Awake()
 
 
         {
-            PlayerBonusCatchControl playerBonusCatchControl = new PlayerBonusCatchControl();
-            playerBonusCatchControl._greatePlayerevent += PlayerBonusCatchControl__greatePlayerevent;
+          
+            // catchControl = FindObjectOfType<PlayerBonusCatchControl>();//так можно создать если не пользоваться мышкой и не перетаскивать обьект в инспекторе
+            catchControl._greatePlayerevent += PlayerBonusCatchControl__greatePlayerevent;
+             
             
             
         }
@@ -24,38 +30,49 @@ namespace OOP
         private PlayerInfo PlayerBonusCatchControl__greatePlayerevent(PlayerInfo player)
         {
             playerInfo = player;
-            return playerInfo;
+
             Debug.LogWarning($"Событие сработало создан обьект {playerInfo}");
+
+            return playerInfo;
         }
 
         
 
-
-        void Update()
-        {
-           
-
-            Debug.Log($"из апдейта счет  {playerInfo._Playerscore}");// Проблема 2 почему в дебаге два значения 0 и обновленное ?
-        }
-
+             
 
         public void ButtonDown()
+        {   currentposition = catchControl.transform.position;
+            GetDataPlayer(playerInfo,currentposition);
+            GetDataBonusesPositionBonuses();
+        }
+
+/// <summary>
+/// Метод для сохранения позиций бонусов на сцене
+/// </summary>
+        public void GetDataBonusesPositionBonuses()
         {
-            GetDataPlayer(playerInfo);
+            bonusPositionsInfoBox=FindObjectsOfType<BonusCurrentPositionInfo>();
+           
+            Debug.Log(bonusPositionsInfoBox.Length);
+            for (int i= 0;  i<bonusPositionsInfoBox.Length; i++)
+            {
+                var streamdata = new StreamData();
+                var saved = bonusPositionsInfoBox[i];
+                //Debug.Log($"Координаты бонуса {saved.positionBonus.x},{saved.positionBonus.y}, {saved.positionBonus.z}");
+                streamdata.SaveBonusData(saved, $"C:/Users/HP VICTUS/Desktop/GeekBrains/Курс 4 Основы С# в Unity/Урок 8 Сохранение данных/savedData{i}.txt");
+            }
+
         }
 
 
-        public static void GetDataPlayer(PlayerInfo playerInfo)//на данном методе кнопка Save на канвасе. Не могу сюда передать обновленные данные по Обьекту игрока
+        public static void GetDataPlayer(PlayerInfo playerInfo,Vector3 position)
         {
             var streamdata = new StreamData();
-            var saved = new PlayerInfo {_NamePlayer=playerInfo._NamePlayer,_Playerscore=playerInfo._Playerscore};
-            saved._NamePlayer = playerInfo._NamePlayer;
-            saved._Playerscore = playerInfo._Playerscore;
-           
-            
-
-             Debug.Log($"счет игрока составляет { saved._Playerscore}");//проблема3  почему при нажатии кнопки в дебаге выводит значение 0 при увеличении количества бонусов, и не делает обновление значения ?
-             streamdata.Save(saved, "C:/Users/HP VICTUS/Desktop/GeekBrains/Курс 4 Основы С# в Unity/Урок 8 Сохранение данных/savedData3.txt");//Проблема 4 почему в текстовом файле не сохраняются обновленные данные в GameControllers?
+            playerInfo.PositionPlayer.X = position.x;
+            playerInfo.PositionPlayer.Y = position.y;
+            playerInfo.PositionPlayer.Z = position.z;
+            var saved = playerInfo;
+            streamdata.Save(saved, "C:/Users/HP VICTUS/Desktop/GeekBrains/Курс 4 Основы С# в Unity/Урок 8 Сохранение данных/savedData.txt");
         }
 
     }

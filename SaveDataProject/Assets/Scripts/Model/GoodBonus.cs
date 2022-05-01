@@ -21,24 +21,18 @@ namespace OOP
         void Awake()
         {
 
-            _lenthflay = Random.Range(2f, 2.2f);
-            _bonusPoint = 5;
+            _lenthflay = Random.Range(3f, 4f);
+           
 
 
         }
 
-        void Start()
-        {
-
-            //Instantiate(references.GoodBonus, new Vector3(1, 1, 1), Quaternion.identity);
-            //Instantiate(_goodBonus, _goodspawn1, Quaternion.identity);
-            //
-        }
+       
 
         public void Update()
         {
 
-            transform.Rotate(0.0f, 0.0f, 0.5f);
+            transform.Rotate(0.5f, 0.0f, 0.0f);
             Flay();
         }
 
