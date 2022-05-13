@@ -1692,6 +1692,7 @@ MonoBehaviour:
   currentposition: {x: 0, y: 0, z: 0}
   bonusPositionsInfoBox: []
   dataStringPosition: 
+  spawncontroller: {fileID: 0}
 --- !u!1 &947725476
 GameObject:
   m_ObjectHideFlags: 0
@@ -2489,6 +2490,7 @@ MonoBehaviour:
   currentposition: {x: 0, y: 0, z: 0}
   bonusPositionsInfoBox: []
   dataStringPosition: 
+  spawncontroller: {fileID: 0}
 --- !u!1 &1506672115
 GameObject:
   m_ObjectHideFlags: 0

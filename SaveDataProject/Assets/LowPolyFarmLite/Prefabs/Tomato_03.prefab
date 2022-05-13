@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 5473569773199266313}
   - component: {fileID: 4957726139219627120}
   - component: {fileID: 4373772835222407365}
+  - component: {fileID: -4134074569433666934}
+  - component: {fileID: -4910378552621526777}
+  - component: {fileID: 8150456655674957936}
   m_Layer: 0
   m_Name: Tomato_03
   m_TagString: Untagged
@@ -114,3 +117,44 @@ MonoBehaviour:
   descriptionItem: "\u0422\u043E\u043C\u0430\u0442 \u0443\u0437\u0431\u0435\u043A\u0441\u043A\u0438\u0439"
   pathIcon: Assets/Lesson/Images/Tomato
   pathPrefab: Assets/LowPolyFarmLite/Prefabs/Tomato_03
+--- !u!114 &-4134074569433666934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5473569773201198281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77e47d1655d54c84781ca5a2b946f95a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &-4910378552621526777
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5473569773201198281}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.086434826
+  m_Center: {x: 0.0009502135, y: -0.0018982068, z: -0.00014097616}
+--- !u!54 &8150456655674957936
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5473569773201198281}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

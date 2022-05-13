@@ -41,12 +41,12 @@ public class ShootPlayerController : MonoBehaviour
             }
         }
 
-        //if(Input.GetButton("Fire1"))
-        //{
-        //    var shoot = Instantiate(_bullet, _startShutposition.position,_startShutposition.rotation);
-        //    var D=shoot.GetComponent<Rigidbody>();
-        //    D.AddForce(_startShutposition.up * force);
-        //}
+        if (Input.GetButton("Fire1"))
+        {
+            var shoot = Instantiate(_bullet, _startShutposition.position, _startShutposition.rotation);
+            var D = shoot.GetComponent<Rigidbody>();
+            D.AddForce(_startShutposition.up * force);
+        }
 
     }
 }
