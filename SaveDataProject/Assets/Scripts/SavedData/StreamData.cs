@@ -67,6 +67,20 @@ namespace OOP
             }
 
             return resultForload;
-        }        
+        }   
+        
+        //public BonusCurrentPositionInfo Load_Bonus(string path=null)
+        //{
+        //    var resultForloadBonus = new BonusCurrentPositionInfo();
+        //    using (var srBonus = new StreamReader(path))
+        //    {
+        //        resultForloadBonus.positionBonus.x = srBonus.ReadLine().TrySingle();
+        //        resultForloadBonus.positionBonus.y = srBonus.ReadLine().TrySingle();
+        //        resultForloadBonus.positionBonus.z = srBonus.ReadLine().TrySingle();
+        //    }
+
+        //    return resultForloadBonus;
+
+        //}
     }
 }

@@ -5,7 +5,7 @@ using System;
 
 
 namespace OOP
-{   [Serializable]
+{   
     public class BonusCurrentPositionInfo : MonoBehaviour
     {
         

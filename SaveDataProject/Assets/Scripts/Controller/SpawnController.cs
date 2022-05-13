@@ -2,30 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnController : MonoBehaviour
+namespace OOP
 {
-    [SerializeField] private GameObject bonusPrefab;
-    
-    
-    void Start()
-    { 
-        for(int i=0; i<=6; i++)
-        {
-          SpawningOnScene();
-        }
-        
-    }
-
-    public void SpawningOnScene()
+    public class SpawnController : MonoBehaviour
     {
-        Vector3 bonusposition = Vector3.zero;
-        bonusposition.x = Random.Range(-4,4);
-        bonusposition.z = Random.Range(-4, 4);
-        bonusposition.y = Random.Range(1, 3);
-        //transform.rotation = Quaternion.Euler(90, 0, 0);//Как префаб повернуть на  90 градусов ?
-        Instantiate(bonusPrefab, bonusposition, Quaternion.identity,transform);
+        [SerializeField] private GameObject bonusPrefab;
+
+
+        void Start()
+        {
+            for (int i = 0; i <= 6; i++)
+            {
+                SpawningOnScene();
+            }
+
+        }
+
+        public void SpawningOnScene()
+        {
+            Vector3 bonusposition = Vector3.zero;
+            bonusposition.x = Random.Range(-4, 4);
+            bonusposition.z = Random.Range(-4, 4);
+            bonusposition.y = Random.Range(1, 3);
+            Instantiate(bonusPrefab, bonusposition, bonusPrefab.transform.rotation, transform);
+        }
+
+        public void SpawningOnSceneLoad(DataBonusPosition[] value)
+        {
+            for (int i = 0; i <= value.Length; i++)
+            {
+                Vector3 bonusposition = Vector3.zero;
+
+               // bonusposition.x = value[i].
+               // bonusposition.z = ;
+              //  bonusposition.y =;
+                Instantiate(bonusPrefab, bonusposition, bonusPrefab.transform.rotation, transform);
+            }
+        }
+
+
     }
-
-
-
 }

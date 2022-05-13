@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 namespace OOP
 {
     public class GameController :MonoBehaviour
@@ -11,19 +12,17 @@ namespace OOP
         public PlayerInfo playerInfo;
         public Vector3 currentposition;
         public BonusCurrentPositionInfo [] bonusPositionsInfoBox;
-         
-
-
+        public string dataStringPosition;
+        public GameObject spawncontroller;
+             
 
         public void Awake()
 
 
         {
-          
             // catchControl = FindObjectOfType<PlayerBonusCatchControl>();//так можно создать если не пользоваться мышкой и не перетаскивать обьект в инспекторе
             catchControl._greatePlayerevent += PlayerBonusCatchControl__greatePlayerevent;
-             
-            
+                        
             
         }
 
@@ -36,14 +35,11 @@ namespace OOP
             return playerInfo;
         }
 
-        
-
-             
-
+            
         public void ButtonDown()
         {   currentposition = catchControl.transform.position;
-            GetDataPlayer(playerInfo,currentposition);
-            GetDataBonusesPositionBonuses();
+            SetDataPlayer(playerInfo,currentposition);
+           
         }
 
 /// <summary>
@@ -51,21 +47,21 @@ namespace OOP
 /// </summary>
         public void GetDataBonusesPositionBonuses()
         {
-            bonusPositionsInfoBox=FindObjectsOfType<BonusCurrentPositionInfo>();
+            bonusPositionsInfoBox = FindObjectsOfType<BonusCurrentPositionInfo>();//складываем все позиции в массив векторов
+
            
-            Debug.Log(bonusPositionsInfoBox.Length);
-            for (int i= 0;  i<bonusPositionsInfoBox.Length; i++)
-            {
-                var streamdata = new StreamData();
-                var saved = bonusPositionsInfoBox[i];
-                //Debug.Log($"Координаты бонуса {saved.positionBonus.x},{saved.positionBonus.y}, {saved.positionBonus.z}");
-                streamdata.SaveBonusData(saved, $"C:/Users/HP VICTUS/Desktop/GeekBrains/Курс 4 Основы С# в Unity/Урок 8 Сохранение данных/savedData{i}.txt");
-            }
+            DataBonusPosition to = new DataBonusPosition(bonusPositionsInfoBox);//складываем массив со  всеми позициями в структуру
+            dataStringPosition = JsonUtility.ToJson(to);//структуру превращаем в строку и складываем в джсон
+            print(dataStringPosition);
+            
 
         }
-
-
-        public static void GetDataPlayer(PlayerInfo playerInfo,Vector3 position)
+                /// <summary>
+                /// Метод для сохранения данных о местоположении игрока на сцене
+                /// </summary>
+                /// <param name="playerInfo"></param>
+                /// <param name="position"></param>
+        public static void SetDataPlayer(PlayerInfo playerInfo,Vector3 position)
         {
             var streamdata = new StreamData();
             playerInfo.PositionPlayer.X = position.x;
@@ -75,5 +71,31 @@ namespace OOP
             streamdata.Save(saved, "C:/Users/HP VICTUS/Desktop/GeekBrains/Курс 4 Основы С# в Unity/Урок 8 Сохранение данных/savedData.txt");
         }
 
+        /// <summary>
+        /// Метод для загрузки данных о местоположении бонусов на сцене
+        /// </summary>
+        /// <param name="value"></param>
+        public static void SetDataBonus(string value)
+        {
+          DataBonusPosition from = JsonUtility.FromJson<DataBonusPosition>(value);//поолучен массив структур  с позициями 
+            print(from.v3s);
+          //DataBonusPosition from = JsonUtility.FromJson<DataBonusPosition>(dataStringPosition);
+            for(int i=0;i>=from.v3s.Length;i++)
+            {
+                print(from.v3s[i]);
+            }
+            
+        }
+
+
+        public void LoadBonuses()
+        {
+            if(dataStringPosition!=null)
+            SetDataBonus(dataStringPosition);
+                    
+                         
+                                 
+        }
+             
     }
 }
