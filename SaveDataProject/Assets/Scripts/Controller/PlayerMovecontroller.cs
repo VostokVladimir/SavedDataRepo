@@ -19,7 +19,7 @@ public class PlayerMovecontroller : MonoBehaviour
         float movehorizont = Input.GetAxis("Horizontal");
         float movevertikal = Input.GetAxis("Vertical");
         Vector3 movevector3 = new Vector3(movehorizont, 0, movevertikal);
-        //_rigidbody.AddForce(movevector3 * speed);
+        //_rigidbody.AddForce(movevector3 * speed);//с инерцией
         _rigidbody.velocity = movevector3 * speed;
     }
 
