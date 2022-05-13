@@ -3,90 +3,99 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 namespace OOP
 {
-    public class GameController : MonoBehaviour
+    public class GameController :MonoBehaviour
     {
-        //private IData<SavedData> _dataforSave;
-        private References references;
+        public PlayerBonusCatchControl catchControl;
         public PlayerInfo playerInfo;
-        public float score;
-        public SaveGame game;
-        public PlayerInfo currentplayerInfo;
-        
-         
+        public Vector3 currentposition;
+        public BonusCurrentPositionInfo [] bonusPositionsInfoBox;
+        public string dataStringPosition;
+        public GameObject spawncontroller;
+             
 
         public void Awake()
 
 
         {
-            playerInfo = new PlayerInfo("Вася",20,0);
-            playerInfo.playerPosition = transform.position;//задаем стартовую позицию игрока
-            Debug.Log($"позиция на старте X {playerInfo.playerPosition.x} Y {playerInfo.playerPosition.x} Z {playerInfo.playerPosition.z}");//проблема 1 почему выводит в дебаг  два варианта значения позиции объекта ? ( см принт скрин)
-            score = playerInfo._Playerscore;//задаем счет игрока  на старте игры
-
-            #region "Работа с ссылками"
-            //вар 1
-            // GameObject playerGO = null; //GO обнуляем что бы скачать префаб с папки ресурсес
-            // references = new References();//создаем экз класса для хранения ссылок на папку//
-            // playerGO = references.Player;//блин говорит что ссылка пустая референсес не загрузился
-            //вар 2
-            //var _playerGO = Resources.Load<GameObject>("Player"); //дал прямую ссылку 
-            //Object.Instantiate(_player, new Vector3(2, 4, 2), Quaternion.identity);//грузится куча клонов префабов и юнити вылетает
-            //забить пока на загрузку из папки
-
-            //var player = new Player("Федор",20,0);
-
-            //playerInfo = new PlayerInfo("Lena", 34, 0);
-            // var name1 = playerInfo._NamePlayer;
-            #endregion
-
-                      
+            // catchControl = FindObjectOfType<PlayerBonusCatchControl>();//так можно создать если не пользоваться мышкой и не перетаскивать обьект в инспекторе
+            catchControl._greatePlayerevent += PlayerBonusCatchControl__greatePlayerevent;
+                        
             
         }
 
-        public void OnTriggerEnter(Collider other)
+        private PlayerInfo PlayerBonusCatchControl__greatePlayerevent(PlayerInfo player)
         {
-            if(other.gameObject.CompareTag("Bonus"))
+            playerInfo = player;
 
-            {
-                
-             var _goodbonus= other.GetComponent<GoodBonus>();
-             var bonus= _goodbonus.Point;//получаем размер очков от сбора Бонуса
-             playerInfo._Playerscore += bonus;
-             Debug.Log($" стало {playerInfo._Playerscore}");
-            }
+            Debug.LogWarning($"Событие сработало создан обьект {playerInfo}");
+
+            return playerInfo;
         }
 
-       
+            
+        public void ButtonDown()
+        {   currentposition = catchControl.transform.position;
+            SetDataPlayer(playerInfo,currentposition);
+           
+        }
 
-        void Update()
+/// <summary>
+/// Метод для сохранения позиций бонусов на сцене
+/// </summary>
+        public void GetDataBonusesPositionBonuses()
         {
-            if (playerInfo != null)//передаем текущие данные Игрока
-            {
-               // currentplayerInfo = playerInfo;
-                currentplayerInfo._NamePlayer = playerInfo._NamePlayer;
-               currentplayerInfo._Playerscore = playerInfo._Playerscore;
-                currentplayerInfo.playerPosition = playerInfo.playerPosition;
-            }
+            bonusPositionsInfoBox = FindObjectsOfType<BonusCurrentPositionInfo>();//складываем все позиции в массив векторов
 
-            Debug.Log($"из апдейта счет  {currentplayerInfo._Playerscore}");// Проблема 2 почему в дебаге два значения 0 и обновленное ?
+           
+            DataBonusPosition to = new DataBonusPosition(bonusPositionsInfoBox);//складываем массив со  всеми позициями в структуру
+            dataStringPosition = JsonUtility.ToJson(to);//структуру превращаем в строку и складываем в джсон
+            print(dataStringPosition);
+            
+
+        }
+                /// <summary>
+                /// Метод для сохранения данных о местоположении игрока на сцене
+                /// </summary>
+                /// <param name="playerInfo"></param>
+                /// <param name="position"></param>
+        public static void SetDataPlayer(PlayerInfo playerInfo,Vector3 position)
+        {
+            var streamdata = new StreamData();
+            playerInfo.PositionPlayer.X = position.x;
+            playerInfo.PositionPlayer.Y = position.y;
+            playerInfo.PositionPlayer.Z = position.z;
+            var saved = playerInfo;
+            streamdata.Save(saved, "C:/Users/HP VICTUS/Desktop/GeekBrains/Курс 4 Основы С# в Unity/Урок 8 Сохранение данных/savedData.txt");
+        }
+
+        /// <summary>
+        /// Метод для загрузки данных о местоположении бонусов на сцене
+        /// </summary>
+        /// <param name="value"></param>
+        public static void SetDataBonus(string value)
+        {
+          DataBonusPosition from = JsonUtility.FromJson<DataBonusPosition>(value);//поолучен массив структур  с позициями 
+            print(from.v3s);
+          //DataBonusPosition from = JsonUtility.FromJson<DataBonusPosition>(dataStringPosition);
+            for(int i=0;i>=from.v3s.Length;i++)
+            {
+                print(from.v3s[i]);
+            }
+            
         }
 
 
-        public void Save()//на данном методе кнопка Save на канвасе. 
+        public void LoadBonuses()
         {
-            if (game == null)
-            { game = new SaveGame(playerInfo); }
-            else 
-            { 
-              game.SaveGameonButton(playerInfo);
-              
+            if(dataStringPosition!=null)
+            SetDataBonus(dataStringPosition);
+                    
+                         
+                                 
+        }
              
-            }
-
-             Debug.Log($"счет игрока составляет { playerInfo}");//проблема3  почему при нажатии кнопки в дебаге выводит значение 0 при увеличении количества бонусов, и не делает обновление значения ?
-        }
-
     }
 }

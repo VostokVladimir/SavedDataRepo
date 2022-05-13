@@ -16,45 +16,71 @@ namespace OOP
 
             using (var sw = new StreamWriter(path)) 
             {
-                sw.WriteLine(data._NamePlayer);
-                sw.WriteLine(data.playerPosition.x);
-                sw.WriteLine(data.playerPosition.y);
-                sw.WriteLine(data.playerPosition.z);
-                sw.WriteLine(data._Helth);
-                sw.WriteLine(data._Playerscore);
+                sw.WriteLine(data.NamePlayerQ);
+                sw.WriteLine(data.PositionPlayer.X);
+                sw.WriteLine(data.PositionPlayer.Y);
+                sw.WriteLine(data.PositionPlayer.Z);
+                sw.WriteLine(data.HelthQ);
+                sw.WriteLine(data.PlayerScoreQ);
 
             }
             
 
          }
 
+        public void SaveBonusData(BonusCurrentPositionInfo databonus, string path = null)
+        {
+            if (path == null)
+            { return; }
+
+            using (var sw = new StreamWriter(path))
+            {
+                
+                sw.WriteLine(databonus.positionBonus.x);
+                sw.WriteLine(databonus.positionBonus.y);
+                sw.WriteLine(databonus.positionBonus.z);
+                 
+
+            }
+
+
+        }
+
+
         public PlayerInfo Load(string path = null)
         {
-            var resultForload = new PlayerInfo("",0,0);
-
-            //if(path==null)
-            //{ throw new NullReferenceException(); }
-
-            //if(!File.Exists(path))
-            //{ throw new FileNotFoundException("Файла загрузки нет в папке"); }
-
+            var resultForload = new PlayerInfo();
 
             using (var sr = new StreamReader(path))
             {
                 // while (!sr.EndOfStream)
 
 
-                resultForload._NamePlayer = sr.ReadLine();
-                resultForload.playerPosition.x = sr.ReadLine().TrySingle();
-                resultForload.playerPosition.y = sr.ReadLine().TrySingle();
-                resultForload.playerPosition.z = sr.ReadLine().TrySingle();
-                resultForload._Helth = sr.ReadLine().TryInt();
-                resultForload._Playerscore = sr.ReadLine().TryInt();
+                resultForload.NamePlayerQ = sr.ReadLine();
+                resultForload.PositionPlayer.X = sr.ReadLine().TrySingle();
+                resultForload.PositionPlayer.Y = sr.ReadLine().TrySingle();
+                resultForload.PositionPlayer.Z = sr.ReadLine().TrySingle();
+                resultForload.HelthQ = sr.ReadLine().TryInt();
+                resultForload.PlayerScoreQ = sr.ReadLine().TryInt();
 
 
             }
 
             return resultForload;
-        }        
+        }   
+        
+        //public BonusCurrentPositionInfo Load_Bonus(string path=null)
+        //{
+        //    var resultForloadBonus = new BonusCurrentPositionInfo();
+        //    using (var srBonus = new StreamReader(path))
+        //    {
+        //        resultForloadBonus.positionBonus.x = srBonus.ReadLine().TrySingle();
+        //        resultForloadBonus.positionBonus.y = srBonus.ReadLine().TrySingle();
+        //        resultForloadBonus.positionBonus.z = srBonus.ReadLine().TrySingle();
+        //    }
+
+        //    return resultForloadBonus;
+
+        //}
     }
 }
